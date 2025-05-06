@@ -3,8 +3,6 @@ from flask import Flask, request, jsonify
 import asyncio
 import logging
 import re
-import hypercorn.asyncio
-import hypercorn.config
 
 # Set up logging to show more info for debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -478,9 +476,3 @@ async def get_odds():
     bet_type = data['bet_type']
     result = await scrape_bet365(fixture, bet_type)
     return jsonify(result)
-
-if __name__ == "__main__":
-    import asyncio
-    config = hypercorn.config.Config()
-    config.bind = ["127.0.0.1:8000"]
-    asyncio.run(hypercorn.asyncio.serve(app, config))
